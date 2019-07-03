@@ -1,3 +1,5 @@
+import SparkJob
+
 class SparkOnGKEJob(SparkJob):
     """
     This class have methods to submit spark jobs on GKE cluster

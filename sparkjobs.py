@@ -1,3 +1,6 @@
+import os
+
+
 class SparkJob(object):
     """
     This class have methods to submit spark jobs.
@@ -17,6 +20,14 @@ class SparkJob(object):
         for k,v in self.spark_conf:
             spark_conf_str = " %s %s=%s %s" %("--conf", k, v, spark_conf_str)
         return (spark_conf_str)
+
+
+    def getSparkSubmitCommand():
+        sparkhome = os.environ.get("SPARK_HOME")
+        if sparkhome is not None:
+            return sparkhome +"/bin/spark-submit"
+        else:
+            return "spark-submit"
 
 
     def submit_job(self):
