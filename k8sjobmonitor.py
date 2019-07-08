@@ -5,97 +5,57 @@ import sys
 import yaml
 
 
-class K8sJobs(object):
+class K8sJobMonitor(object):
     """
-    This class has methods to submit non spark jobs to K8 cluster.
-    For Spark jobs use SparkOnGKEJobs or SparkJobs classes.
+    This class has methods to monitor Job on K8 cluster.
     """
 
-    def __init__(self, k8host, jobname, container_image, container_name, namespace, env_vars, parallelism, cmd, image_pull_policy):
+    def __init__(self, k8host, jobname, namespace):
         self.k8host= k8host
         self.jobname = jobname
-        self.container_image = container_image
-        self.container_name = container_name
         self.namespace = namespace
-        self.env_vars = env_vars
-        self.parallelism = parallelism
-        self.cmd = cmd
-        self.image_pull_policy = image_pull_policy
+        kubernetes.config.load_kube_config()
         configuration = client.Configuration()
         configuration.host = self.k8host
         configuration.watch = True
+        configuration.debug = True
         self.api_instance = client.BatchV1Api(client.ApiClient(configuration))
         self.body = None
 
-    def kube_create_job_object():
-        '''
-        Create a k8 Job Object
-        '''
-        ''' Body is the object Body '''
-        body = self.client.V1Job(api_version="batch/v1", kind="Job")
-        ''' Configure Metadata '''
-        body.metadata = self.client.V1ObjectMeta(namespace=self.namespace, name=self.jobname)
-        ''' Add Status '''
-        body.status = self.client.V1JobStatus()
-        ''' Configure Template '''
-        template = self.client.V1PodTemplate()
-        template.template = client.V1PodTemplateSpec()
-        ''' Passing Arguments in Env: '''
-        env_list = []
-        for env_name, env_value in self.env_vars.items():
-            env_list.append(self.client.V1EnvVar(name=env_name, value=env_value))
-        ''' Configure command and arguments '''
-        command = ["/bin/bash"]
-        args = ["-c"]
-        args.append(self.cmd)
-        print (len(args))
-        print (args)
-        ''' Configure security context and capabilities '''
-        capabilities = client.V1Capabilities(add=["SYS_ADMIN"])
-        security_context = client.V1SecurityContext(capabilities=capabilities)
-        container = client.V1Container(name=self.container_name, image=self.container_image, env=env_list, command=command, args=args, security_context=security_context, image_pull_policy=self.image_pull_policy)
-        template.template.spec = client.V1PodSpec(containers=[container], restart_policy='Never')
-        ''' Configure Spec '''
-        body.spec = self.client.V1JobSpec(parallelism=self.parallelism, ttl_seconds_after_finished=600, template=template.template)
-        self.body = body
+
+    def monitor(self):
+        self.kube_monitor_job_status()
 
 
-    def kube_run_job_object():
-        try: 
-           api_response = api_instance.create_namespaced_job("default", self.body, pretty=True)
-           print(api_response)
-        except kubernetes.client.rest.ApiException as e:
-           print("Exception when calling BatchV1Api->create_namespaced_job: %s\n" % e)
-        return
-
-
-    def kube_monitor_job_status():
+    def kube_monitor_job_status(self):
         STATUS_COND_TYPE_COMPLETE = "Complete"
         STATUS_COND_STATUS_TRUE = "True"
         INTERESTED_EVENTS = ["MODIFIED", "DELETED"]
         api_response = None
         ''' Watch begins! '''
         w = kubernetes.watch.Watch()
+        print ("Starting a watch")
         stream = w.stream(self.api_instance.list_namespaced_job, self.namespace)
         for event in stream:
-            if event['object'].metadata.name == self.name:
+            print (event['object'].metadata.name)
+            if event['object'].metadata.name == self.jobname:
                 if event['type'] in INTERESTED_EVENTS:
                     status = event['object'].status
                     if not (status.failed):
                         if not (status.active):
                             conditions  = status.conditions[0]
                             if conditions.type == STATUS_COND_TYPE_COMPLETE and STATUS_COND_STATUS_TRUE == "True":
-                                print ("Job (%s) status is (%s)" %(name, conditions.type))
+                                print ("Job (%s) status is (%s)" %(self.jobname, conditions.type))
                                 #Call clean up here
                                 break
                         else:
-                            print ("Job (%s) has (%s) active nodes" %(self.name, status.active))
+                            print ("Job (%s) has (%s) active nodes" %(self.jobname, status.active))
                     else:        
-                        print ("Job (%s) has (%s) failed nodes" %(self.name, status.failed))
+                        print ("Job (%s) has (%s) failed nodes" %(self.jobname, status.failed))
         return True
 
 
-    def kube_delete_complete_jobs_pod():
+    def kube_delete_complete_jobs_pod(self):
         deleteoptions = client.V1DeleteOptions()
         api_pods = client.CoreV1Api()
         try:
@@ -121,7 +81,7 @@ class K8sJobs(object):
         return True
 
 
-    def kube_cleanup_complete_jobs():
+    def kube_cleanup_complete_jobs(self):
         deleteoptions = client.V1DeleteOptions()
         try: 
             jobs = api_instance.list_namespaced_job(self.namespace,
