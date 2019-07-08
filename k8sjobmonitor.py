@@ -23,7 +23,7 @@ class K8sJobMonitor(object):
         self.body = None
 
 
-    def monitor(self):
+    def start(self):
         self.kube_monitor_job_status()
 
 

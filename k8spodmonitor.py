@@ -68,7 +68,7 @@ class K8sPodMonitor(object):
                     print ("Pod (%s) status is (%s)" %(name, status.phase))
                     if status.phase == 'Succeeded' or status.phase == 'Failed' or status.phase == 'Pending':
                         pods.remove(name)
-    return (True)
+        return (True)
 
 
     def kube_delete_pod(self):
