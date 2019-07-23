@@ -28,6 +28,12 @@ class K8sJob(object):
         self.api_instance = client.BatchV1Api(client.ApiClient(configuration))
         self.body = None
 
+
+    def submit_job(self):
+        self.kube_create_job_object()
+        self.kube_run_job_object()
+
+
     def kube_create_job_object(self):
         '''
         Create a k8 Job Object
@@ -54,11 +60,20 @@ class K8sJob(object):
         ''' Configure security context and capabilities '''
         capabilities = client.V1Capabilities(add=["SYS_ADMIN"])
         security_context = client.V1SecurityContext(capabilities=capabilities)
-        container = client.V1Container(name=self.container_name, image=self.container_image, env=env_list, command=command, args=args, security_context=security_context, image_pull_policy=self.image_pull_policy)
-        template.template.spec = client.V1PodSpec(containers=[container], restart_policy='Never')
+
+        secret_volume_mount = client.V1VolumeMount(name="secret-volume", mount_path="/mnt")
+
+        container = client.V1Container(name=self.container_name, image=self.container_image, env=env_list, command=command, args=args, security_context=security_context, image_pull_policy=self.image_pull_policy, volume_mounts=[secret_volume_mount])
+        '''Configure Volume for secret mount'''
+        secret_volume_source = client.V1SecretVolumeSource(secret_name="spark-sa")
+        secret_volume = client.V1Volume(name="secret-volume", secret=secret_volume_source)
+
+        template.template.spec = client.V1PodSpec(containers=[container], restart_policy='Never', volumes=[secret_volume])
+
         ''' Configure Spec '''
         body.spec = client.V1JobSpec(parallelism=self.parallelism, ttl_seconds_after_finished=600, template=template.template)
         self.body = body
+        print (body)
 
 
     def kube_run_job_object(self):

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "biodock",
+  "private_key_id": "c4201a8d8b947a24817781818daac2d4683cccd5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCTV+FCQPwq/6dt\ngyVHU03BYmRm7th5weMuw2eWRgxPOyKBPzhrI7jjcca1dCVaeKDX04IUd/L3DYVV\npUiP/0edaQ8spuIYbKRBq0Ce3dTpqttbe0jCtKWxcwlhMyMOeJVZI/+eM0A/ST61\ntL7ha5jOif09tS+dfEF1sAD4lYbKEPESroiMWGfMdXTH9Xtb8ZqmZrG68ul6fsuO\nHCcarpJGW+8rcY5CpXHQ9rkBclkyUuek5+x7ydT/kogzO8r/QrnVNZW7GzHZ40O+\nW/mhfPG7j2bKGNdwa5XzHmI3SKqTeunCrxl3BbVp8uzaieoZo1uyhNjnAusPOilu\nLz73YKopAgMBAAECggEAEm0SRMKTNn5frgSRUCTlC6rWEwBKDpn2YvX5WZPbfLoQ\ns9iX4eAnAjyLhMwoUrLUrIDtGsmwVwB4HPCNTUK3rkIB7YvWKQdHGFZF/8gOlQUy\npvNZM047jWAtO1xVhT0DslDb6ekPXwq2HquillaqFqQviPzEXl24YvMWf//VCiZZ\nHCfzlsJKuoS/93Gm08LZ3BeAnTOZuwOWr/2b5aA7ZnTYJHzky2Eh8RZ6AxXwl0DU\nXRrQnBEqgjwCD5gwJyBtxrSErofxD58mmSC+GNFY4xEyDHYXb2ub0pP3w+ZlmHiU\ns2V5Qixi0vq0OxZdLazlDuFYkxvb+x+4hrpL5Tz83QKBgQDK4TQYjbB89I0bt9fV\nkg+FLz/2Xw3QbEmd0si05XDbZJNHFwfgeIIpkWt7utI0MXdl7vRbnURATyK4VDrO\nptGFxJrpNwRpK/koIcfs3rX3Dy5c1mn3jQUt8A2CvBtbDYLtll9EZDExwmSh3jWD\nDWVINnBC3qTCNGwDApoG6VPpXQKBgQC57CISY/EAYOZ3ZwKEzHJbl2QOhoRi7qJT\nVEkmUEGEOjZWb1K8OEL192xYGPvg100DeUU/lP39+OUvwPKEEAUJhIS7/eGGLzND\nR7NFTasmS/Ot1zkWhOcg++Vj1LmFIL5vivlX+FB3Jhk9BaKNw2QHK1LRGc6k9GWJ\nemLm90ZbPQKBgQCUjqVsGUyToys0kcEc5TAyMTAgAuiFptWdGHzZYWzradEibC3b\nY8LEF3TiDCHiEBrC7F/IOfeBM7FT0nGhYqvnzNg2T5AORyHSDjJsM4SBHX+wgVzk\n5UFWqwHpqj5JxTILMWIfHVKcgiDYGnOKvCNe5mX7wTZZ8rLo3V3WE8LbDQKBgQCi\nngDnKPcgp6CtCzJOySu1JONlOQ8OIT9ltzEMC+JiLzBbxZ8N9f/Ld5ASNjgI3wgD\nY8zH4h+ORmbfr9nu3LwrKPeYHmVlol8qF8qbcWWjZ4dJpBfQtIocdXacLPHfmVY3\n5cxVv2FR9cbZctZNPHt/McuMDRCLgyBUcPGUpu+o2QKBgQCdFP6Z1zNsakY7SE9H\nu/MeBFEeNupujFevZGYS+OCAuNXlhh887er4I0k96AUQV6wiuKo0iDXL+4ZLeFTY\nwHhkoZSD9i0ro/AlhUC8rYAAYV/iRyE+Q7Vbyb5NMIxdt1AxrrQ8zfbyA52O4dt3\nBBN2xgbKL1Q2/0eD7ix6EbWGjw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "spark-bwa@biodock.iam.gserviceaccount.com",
+  "client_id": "109651173648550029111",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/spark-bwa%40biodock.iam.gserviceaccount.com"
+}
