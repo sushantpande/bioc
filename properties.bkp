@@ -1,0 +1,27 @@
+spark.app.name  sparkBwa
+spark.kubernetes.namespace default
+spark.kubernetes.driverEnv.GCS_PROJECT_ID biodock
+spark.kubernetes.driverEnv.GOOGLE_APPLICATION_CREDENTIALS /mnt/secrets/spark-sa.json
+spark.kubernetes.container.image docker.io/sushantpande/spark-gcp-con-py:orig9
+spark.kubernetes.driver.secrets.spark-sa  /mnt/secrets
+spark.kubernetes.executor.secrets.spark-sa  /mnt/secrets
+spark.driver.cores 0.1
+spark.executor.instances 3
+spark.executor.cores 1
+spark.executor.memory 512m
+spark.driver.memory 512m
+spark.executorEnv.GCS_PROJECT_ID    biodock
+spark.executorEnv.GOOGLE_APPLICATION_CREDENTIALS /mnt/secrets/spark-sa.json
+spark.hadoop.google.cloud.auth.service.account.enable true
+spark.hadoop.google.cloud.auth.service.account.json.keyfile /mnt/secrets/spark-sa.json
+spark.hadoop.fs.gs.project.id biodock
+spark.hadoop.fs.gs.system.bucket biodock-bucket
+spark.submit.deployMode cluster 
+spark.kubernetes.executor.volumes.hostPath.indexpath.mount.path /mnt
+spark.kubernetes.executor.volumes.hostPath.indexpath.mount.readOnly false
+spark.kubernetes.executor.volumes.hostPath.indexpath.options.path /home/snappyflow2018/scc
+spark.kubernetes.driver.volumes.hostPath.indexpath.mount.path /mnt
+spark.kubernetes.driver.volumes.hostPath.indexpath.mount.readOnly false
+spark.kubernetes.driver.volumes.hostPath.indexpath.options.path /home/snappyflow2018/scc
+
+spark.kubernetes.authenticate.driver.serviceAccountName default
